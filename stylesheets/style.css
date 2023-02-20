@@ -147,3 +147,8 @@ a {
     font-size: 1.3125rem;
 }
 
+@media (max-width: 545px) {
+    .footer-text {
+        font-size: 0.675rem;
+    }
+}
