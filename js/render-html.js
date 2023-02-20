@@ -27,6 +27,22 @@ const renderWeather = function (apiObj, title) {
     city.addEventListener('click', () => renderCityInput())
 }
 
+const callbackFindByCity = async function (event) {
+    event.preventDefault()
+    const input = mainBlock.querySelector('#input')
+    const lat = input.dataset.lat
+    const lon = input.dataset.lon
+    if (lat && lon) {
+        try {
+            const weatherJSON = await WeatherApiClient.getWeatherByCoordinates(lat, lon)
+            renderWeather(weatherJSON, 'Based on your city choice.')
+        } catch (error) {
+            console.warn(`Couldn\`t get weather by city. Error: ${error}`)
+            renderError(error)
+        }
+    }
+}
+
 
 const renderCityInput = function () {
     mainBlock.innerHTML =
@@ -43,22 +59,11 @@ const renderCityInput = function () {
     inputField.focus()
     inputField.addEventListener('input', event => renderCitySelector(event))
     const findBtn = mainBlock.querySelector('.main__button')
-    findBtn.addEventListener('click', async (event) => {
-        event.preventDefault()
-
-        const input = mainBlock.querySelector('#input')
-        const lat = input.dataset.lat
-        const lon = input.dataset.lon
-        if (lat && lon) {
-            try{
-                const weatherJSON = await WeatherApiClient.getWeatherByCoordinates(lat, lon)
-                renderWeather(weatherJSON, 'Based on your city choice.')
-            }
-            catch (error){
-                console.warn(`Couldn\`t get weather by city. Error: ${error}`)
-                renderError(error)
-            }
-        }
+    // listeners
+    findBtn.addEventListener('click', async event => await callbackFindByCity(event))
+    inputField.addEventListener('keydown', async event => {
+        if (event.code === 'Enter') await callbackFindByCity(event)
+        else if (event.code === 'Escape') renderCityInput()
     })
 }
 
