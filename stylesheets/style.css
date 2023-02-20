@@ -1,0 +1,141 @@
+/* Reset browser style */
+*, *:before, *:after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 16px;
+}
+
+html {
+    min-width: 340px;
+}
+
+body {
+    font-family: Inter, Muli, sans-serif;
+    font-style: normal;
+    font-size: 1.25rem;
+    font-weight: 400;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    background: linear-gradient(150.64deg, #8e2de2 0%, #4a00e0 100%);
+    height: 100vh;
+    padding: 40px 100px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(100vh - 80px);
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.title {
+    font-weight: 300;
+    font-size: 1.75rem;
+}
+
+
+.temperature__degrees {
+    font-weight: 700;
+    font-size: 4.5rem;
+    color: #ffffff;
+}
+
+.temperature__subtext {
+    margin-bottom: 16px;
+}
+
+
+.temperature__city {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 36px;
+}
+
+.temperature__change-city {
+    font-family: Muli, Inter, sans-serif;
+    font-weight: 400;
+    font-size: 1.0625rem;
+    text-decoration-line: underline;
+}
+
+.city-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.city-input__label {
+    width: 326px;
+    height: 44px;
+    margin: 0 auto 36px;
+}
+
+.city-input__field {
+    position: relative;
+    font-size: 1.25rem;
+    line-height: 2.25rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0);
+    width: 100%;
+    height: 100%;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+
+.city-input__field:focus {
+    outline: none;
+}
+
+.city__select {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    background-color: #ffffff;
+    width: 95%;
+    max-width: 326px;
+    transform: translateY(2.75rem);
+}
+
+.city__option {
+    font-size: 0.875rem;
+    color: #4500c9;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.main__button {
+    width: 140px;
+    height: 48px;
+    color: #4c01e0;
+    background: #ffffff;
+    padding: 0.3125rem 0;
+    border-radius: 8px;
+}
+
+.error__title {
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+
+.error__message {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 57px;
+}
+
+.footer-text {
+    font-size: 1.3125rem;
+}
+

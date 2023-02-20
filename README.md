@@ -1,2 +1,3 @@
-# weatherapp
-Weather App made with openweathermap api
+# Weather app.
+Made with OpenWeatherMap api and Ipify api.
+
