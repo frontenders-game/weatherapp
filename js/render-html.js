@@ -16,13 +16,14 @@ const renderWeather = function (apiObj, title) {
         ['temperature__change-city', 'Change city', 'Press to check weather in another city.']
     ]
 
-    for (let [className, textContent, tagTitle] of data) {
+    for (const [className, textContent, tagTitle] of data) {
         const el = document.createElement('p')
         el.className = className
         el.textContent = textContent
         el.title = tagTitle
         mainBlock.appendChild(el)
     }
+
     const city = mainBlock.querySelector('.temperature__change-city')
     city.addEventListener('click', () => renderCityInput())
 }
@@ -32,6 +33,7 @@ const callbackFindByCity = async function (event) {
     const input = mainBlock.querySelector('#input')
     const lat = input.dataset.lat
     const lon = input.dataset.lon
+    // if city was chosen from dropdown - lat and lon will be defined
     if (lat && lon) {
         try {
             const weatherJSON = await WeatherApiClient.getWeatherByCoordinates(lat, lon)
@@ -40,6 +42,18 @@ const callbackFindByCity = async function (event) {
             console.warn(`Couldn\`t get weather by city. Error: ${error}`)
             renderError(error)
         }
+    }
+    //  lat and lon undefined
+    else {
+        const searchCity = input.value
+        const cities = await WeatherApiClient.getWeatherByCity(searchCity)
+        if (cities.length > 0){
+            const firstChoice = cities[0]
+            const weatherJSON = await WeatherApiClient.getWeatherByCoordinates(firstChoice.lat, firstChoice.lon)
+            return renderWeather(weatherJSON, 'Based on your city choice.')
+        }
+        const err = new Error(`Nothing found for city: ${searchCity}`)
+        renderError(err)
     }
 }
 
@@ -56,11 +70,12 @@ const renderCityInput = function () {
             </label>
         </form>`
     const inputField = mainBlock.querySelector('#input')
-    inputField.focus()
-    inputField.addEventListener('input', event => renderCitySelector(event))
     const findBtn = mainBlock.querySelector('.main__button')
+    inputField.focus()
+
     // listeners
     findBtn.addEventListener('click', async event => await callbackFindByCity(event))
+    inputField.addEventListener('input', event => renderCitySelector(event))
     inputField.addEventListener('keydown', async event => {
         if (event.code === 'Enter') await callbackFindByCity(event)
         else if (event.code === 'Escape') renderCityInput()
@@ -103,7 +118,7 @@ const renderCitySelector = async function (event) {
 
 const renderError = function (err) {
     mainBlock.innerHTML =
-        `<p class="error__title">'Ooops. Something went wrong.'</p>
+        `<p class="error__title">Ooops. Something went wrong.</p>
         <p class="error__message">${err.message}</p>
         <label title="Press try again button">
             <button class="main__button" title="Press try again button" type="submit">Try again</button>
