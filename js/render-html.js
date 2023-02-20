@@ -40,6 +40,7 @@ const renderCityInput = function () {
             </label>
         </form>`
     const inputField = mainBlock.querySelector('#input')
+    inputField.focus()
     inputField.addEventListener('input', event => renderCitySelector(event))
     const findBtn = mainBlock.querySelector('.main__button')
     findBtn.addEventListener('click', async (event) => {
